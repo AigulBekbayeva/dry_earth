@@ -4,8 +4,8 @@
   'use strict';
 
   // ── Set these two for your own page ────────────────────────────────────────
-  const AUTHOR = '';     // e.g. 'Map by Jane Doe for the Map Challenge 2026' (shown in the footer)
-  const REPO_URL = '';   // e.g. 'https://github.com/user/dry-earth' (target of the README link)
+  const AUTHOR = 'Aigul Bekbayeva';     
+  const REPO_URL = 'https://github.com/AigulBekbayeva/dry_earth';  
 
   // ── Colours ────────────────────────────────────────────────────────────────
   // The map is dark, so every ramp runs dark → bright: the brighter, the more of the thing.
