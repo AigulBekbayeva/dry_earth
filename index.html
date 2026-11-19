@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dry Earth: three maps about drought</title>
+<meta name="description" content="An interactive atlas in three maps: the driest places on Earth, the regions losing rainfall by 2050, and the countries where drought, dense population and farm livelihoods overlap.">
+<meta property="og:title" content="Dry Earth: three maps about drought">
+<meta property="og:description" content="Where it is driest, where it is getting drier by 2050, and who is most exposed.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230e2630'/%3E%3Cpath d='M7 14c4-5 12-6 18-2-2 6-8 9-14 8-2-1-4-3-4-6z' fill='%23edc65a'/%3E%3C/svg%3E">
+<link rel="preload" href="vendor/archivo-latin-wdth.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+
+  <aside class="panel" aria-label="Map description">
+    <header class="brand">
+      <p class="brand-name">Dry Earth</p>
+      <p class="brand-sub">Three maps about drought: where water is scarce, where it is getting scarcer, and who that hurts most.</p>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="Choose a map">
+      <button role="tab" id="tab-1" aria-controls="story-1" data-map="1"><span class="tab-n">01</span><span class="tab-t">Driest places</span></button>
+      <button role="tab" id="tab-2" aria-controls="story-2" data-map="2"><span class="tab-n">02</span><span class="tab-t">Getting drier</span></button>
+      <button role="tab" id="tab-3" aria-controls="story-3" data-map="3"><span class="tab-n">03</span><span class="tab-t">Most vulnerable</span></button>
+    </nav>
+
+    <!-- ───────────────────────────── Map 01 -->
+    <article class="story" id="story-1" role="tabpanel" aria-labelledby="tab-1" hidden>
+      <h1 class="question">Where are the driest places on Earth?</h1>
+      <p class="lede">About <b data-fill="m1-lt250"></b> of the world's land gets less than 250&nbsp;mm of rain and snow a year, the usual line for a desert. On <b data-fill="m1-lt25"></b> of it, less than 25&nbsp;mm falls: the eastern Sahara, the Atacama coast, the Tarim Basin and the high plateau of Antarctica.</p>
+
+      <div class="control">
+        <p class="control-label" id="m1-layer-label">Show</p>
+        <div class="seg" role="radiogroup" aria-labelledby="m1-layer-label" data-control="m1-layer">
+          <button role="radio" data-value="precip">Precipitation</button>
+          <button role="radio" data-value="aridity">Aridity index</button>
+        </div>
+        <p class="control-note" data-note="precip">Average yearly rain and snow, in millimetres.</p>
+        <p class="control-note" data-note="aridity" hidden>Precipitation divided by what the air could evaporate. The same 300&nbsp;mm keeps a forest alive in Siberia and barely a shrub in the Sahel.</p>
+      </div>
+
+      <div class="legend" id="m1-legend"></div>
+
+      <section class="block">
+        <h2>Major deserts, driest first</h2>
+        <p class="block-note">Average over each desert's area, mm a year. Select one to go there.</p>
+        <ol class="rows" id="m1-deserts"></ol>
+      </section>
+
+      <section class="block">
+        <h2>Driest countries</h2>
+        <p class="block-note">Average over the whole territory, mm a year.</p>
+        <ol class="rows" id="m1-countries"></ol>
+      </section>
+
+      <details class="method">
+        <summary>How this map was made</summary>
+        <p><b>Precipitation:</b> CRU CL 2.0, a 10-arc-minute (about 18&nbsp;km) climatology of monthly station records for 1961–1990 (New et al., 2002). It has no data for Antarctica, so that continent is filled from GPCP v2.2 satellite-gauge estimates for 1979–2010 on a much coarser 2.5° grid.</p>
+        <p><b>Aridity index:</b> yearly precipitation divided by reference evapotranspiration, which is computed here with the Hargreaves equation from the same dataset's monthly minimum and maximum temperatures. Classes follow UNEP: below 0.05 hyper-arid, 0.05–0.2 arid, 0.2–0.5 semi-arid, 0.5–0.65 dry sub-humid. Not computed for Antarctica.</p>
+        <p><b>Read with care:</b> a grid cell is an average over roughly 300&nbsp;km², so single weather stations can be drier or wetter than the map. Where stations are few, as in Greenland, the central Sahara and Tibet, values are interpolated over long distances. The baseline period is decades old; desert margins have shifted a little since.</p>
+        <p>Desert outlines and country borders: Natural Earth.</p>
+      </details>
+    </article>
+
+    <!-- ───────────────────────────── Map 02 -->
+    <article class="story" id="story-2" role="tabpanel" aria-labelledby="tab-2" hidden>
+      <h1 class="question">Which regions are getting drier?</h1>
+      <p class="lede">By mid-century, climate models agree most firmly on two: the Mediterranean and south-western South America. Southern Africa, southern Australia, Central America and the northern Amazon follow with less agreement. Most other regions gain rainfall, yet all of them warm, and warmer air takes more water back from soil and crops.</p>
+
+      <div class="control">
+        <p class="control-label" id="m2-scen-label">Emissions pathway</p>
+        <div class="seg seg-4" role="radiogroup" aria-labelledby="m2-scen-label" data-control="m2-scen">
+          <button role="radio" data-value="ssp126">Low</button>
+          <button role="radio" data-value="ssp245">Middle</button>
+          <button role="radio" data-value="ssp370">High</button>
+          <button role="radio" data-value="ssp585">Very high</button>
+        </div>
+        <p class="control-note" id="m2-scen-note"></p>
+      </div>
+
+      <div class="legend" id="m2-legend"></div>
+
+      <section class="block">
+        <h2 id="m2-chart-title"></h2>
+        <p class="block-note">Change in yearly rainfall against 1995–2014, 20-year running average. Line: middle model. Band: 10th to 90th percentile of models.</p>
+        <div class="chart" id="m2-chart"></div>
+      </section>
+
+      <section class="block">
+        <h2>Largest projected losses of rainfall</h2>
+        <p class="block-note">2041–2060 against 1995–2014. Tick: middle model. Bar: range of models. Select a region to chart it.</p>
+        <ol class="rows" id="m2-rank"></ol>
+      </section>
+
+      <details class="method">
+        <summary>How this map was made</summary>
+        <p><b>Data:</b> CMIP6 climate-model output, averaged over the land of each IPCC AR6 reference region and published in the IPCC WGI Interactive Atlas repository (Iturbide et al., 2021). One run per model; <span data-fill="m2-models"></span> models, depending on the pathway.</p>
+        <p><b>Change:</b> average yearly precipitation in 2041–2060, the 20 years centred on 2050, compared with 1995–2014 in the same model. The map shows the median across models. Hatching marks regions where fewer than 80% of models agree on whether rainfall goes up or down.</p>
+        <p><b>Read with care:</b> rainfall is only one side of dryness. Soil moisture also depends on evaporation, which rises with temperature, so a region with a small gain in rain can still end up with drier soils. Regions are large; change inside them is uneven. "Today's rainfall" in the tooltip comes from the W5E5 observational dataset, 1995–2014.</p>
+      </details>
+    </article>
+
+    <!-- ───────────────────────────── Map 03 -->
+    <article class="story" id="story-3" role="tabpanel" aria-labelledby="tab-3" hidden>
+      <h1 class="question">Who is most vulnerable to drought?</h1>
+      <p class="lede">Drought becomes a crisis where three things meet: rain that often fails, many people on the land, and livelihoods tied to farming. <b data-fill="m3-triple"></b> rank in the upper 40% on all three. Together they are home to <b data-fill="m3-triple-pop"></b> people.</p>
+
+      <div class="control">
+        <p class="control-label" id="m3-layer-label">Show</p>
+        <div class="seg seg-4" role="radiogroup" aria-labelledby="m3-layer-label" data-control="m3-layer">
+          <button role="radio" data-value="score">Overlap</button>
+          <button role="radio" data-value="D">Drought</button>
+          <button role="radio" data-value="P">People</button>
+          <button role="radio" data-value="A">Farming</button>
+        </div>
+        <p class="control-note" id="m3-layer-note"></p>
+      </div>
+
+      <div class="legend" id="m3-legend"></div>
+
+      <section class="block">
+        <h2>Highest overlap scores</h2>
+        <p class="block-note">Bars show where a country stands among all rated countries on each ingredient: drought frequency, population density, farm employment.</p>
+        <ol class="rows" id="m3-rank"></ol>
+      </section>
+
+      <details class="method">
+        <summary>How this map was made</summary>
+        <p><b>Drought frequency:</b> the share of 12-month periods in 1979–2010 when rainfall was below 80% of its long-term average (GPCP v2.2, 2.5° grid), averaged over a country. Grid cells with less than 100&nbsp;mm a year are left out: where it almost never rains, a shortfall means little.</p>
+        <p><b>Population density</b> (people per km² of land) and <b>employment in agriculture</b> (% of all employment, ILO modelled estimates) are the latest values in the World Bank's World Development Indicators.</p>
+        <p><b>Overlap score:</b> each ingredient is converted to a percentile rank among the <span data-fill="m3-n"></span> rated countries; the score is the geometric mean of the three ranks, times 100. A country has to be high on all three to score high.</p>
+        <p><b>Read with care:</b> this is an index of exposure, not a forecast of famine. It ignores irrigation, rivers fed from abroad, income, and how well a country copes. The rainfall grid is coarse, so countries smaller than 5,000&nbsp;km² are not rated. National averages hide dry provinces inside large countries. Borders follow Natural Earth and imply no position on disputed territories.</p>
+      </details>
+    </article>
+
+    <footer class="credits">
+      <p id="credit-author" hidden></p>
+      <p>Data: CRU CL 2.0, GPCP v2.2, IPCC WGI Atlas (CMIP6), World Bank WDI, Natural Earth. Built with MapLibre GL JS. Sources and method are described in the <a id="repo-link" href="README.md">README</a>.</p>
+    </footer>
+  </aside>
+
+  <main class="stage">
+    <div id="map" role="application" aria-label="Interactive map"></div>
+
+    <div class="map-tools" role="group" aria-label="Map tools">
+      <button id="btn-zoom-in" title="Zoom in" aria-label="Zoom in">+</button>
+      <button id="btn-zoom-out" title="Zoom out" aria-label="Zoom out">&minus;</button>
+      <button id="btn-home" title="Reset the view" aria-label="Reset the view">
+        <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M4 10a6 6 0 1 0 2-4.5M4 3v3.5h3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="seg seg-proj" role="radiogroup" aria-label="Projection" data-control="projection">
+        <button role="radio" data-value="globe">Globe</button>
+        <button role="radio" data-value="mercator">Flat</button>
+      </div>
+    </div>
+
+    <div class="tooltip" id="tooltip" hidden></div>
+    <div class="status" id="status" role="status">Loading map data…</div>
+  </main>
+
+</div>
+<script src="vendor/maplibre-gl.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
